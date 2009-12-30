@@ -10,9 +10,8 @@ $GLOBALS['numbat_start_time'] = microtime(true);
  * This method is called automatically in case you are trying to use a class which hasn't been defined yet.
  *
  * We look for the undefined class in the following folders:
- * - /system/classes/*.php
- * - /user/classes/*.php
- * - /user/sites/x.y.z/classes/*.php
+ * - /app/(classes|datatypes|views)/*.php
+ * - /numbat/(classes|datatypes|views)/*.php
  *
  * @param string $class_name Class called by the user
  */
