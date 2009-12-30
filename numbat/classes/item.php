@@ -84,7 +84,7 @@ class Item {
 	 * @param string $key Key to delete
 	 */
 	public function delete($key) {
-		$result = Database::instance()->delete('name = :name', array('name' => $key, 'table' => 'numbat_items', 'limit' => 1));
+		$result = Database::instance()->delete('id = :id and name = :name', array('id' => $this->id, 'name' => $key, 'table' => 'numbat_items', 'limit' => 1));
 		if ($result != 1)
 			throw new Exception('Update failed!');
 	}
