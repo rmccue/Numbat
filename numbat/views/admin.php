@@ -124,7 +124,8 @@ class View_Admin {
 	<div class="container">
 		<p id="navigation">
 			<a href="<?php echo Config::instance()->get('baseurl') ?>/">Back to site</a> &mdash;
-			<a href="<?php echo Config::instance()->get('baseurl') ?>/admin/">Admin Home</a>
+			<a href="<?php echo Config::instance()->get('baseurl') ?>/admin/">Admin Home</a> &mdash;
+			<a href="<?php echo Config::instance()->get('baseurl') ?>/admin/add">Add Item</a>
 		</p>
 <?php
 	}
