@@ -13,6 +13,8 @@ class View_Admin {
 	}
 
 	public function render() {
+		$this->authenticate();
+		
 		$parts = explode('/', $this->request['page']);
 
 		if($parts[0] !== 'admin')
@@ -35,6 +37,57 @@ class View_Admin {
 				$this->render_list();
 				break;
 		}
+	}
+
+	protected function authenticate() {
+		if ( empty($_COOKIE['numbat_pass']) && empty($_POST['pass']) ) {
+			return $this->login();
+		}
+		
+		if ( isset($_GET['logout']) )
+			return $this->logout();
+		
+		$authed = false;
+		$password = Config::instance()->get('password');
+		
+		if ( !empty($_COOKIE['numbat_pass']) ) {
+			$authed = ($_COOKIE['numbat_pass'] === sha1('numbat' . $password));
+		}
+		
+		if ( !empty($_POST['pass']) ) {
+			$authed = ($_POST['pass'] === $password);
+		}
+		
+		if ( !$authed )
+			return $this->login();
+		
+		setcookie('numbat_pass', sha1('numbat' . $password), time() + 1209600);
+	}
+
+	protected function login() {
+		$this->title = 'Login';
+		$this->header(false);
+?>
+		<h1>Login</h1>
+		<form method="POST" action="<?php echo Config::instance()->get('baseurl') ?>/admin/">
+			<div class="form-row">
+				<label for="pass">Password</label>
+				<input type="password" name="pass" id="pass" />
+			</div>
+			<div class="submit-row">
+				<input type="submit" name="submit" class="default" value="Submit" />
+				<input type="reset" value="Reset" />
+			</div>
+		</form>
+<?php
+		$this->footer();
+		die();
+	}
+
+	protected function logout() {
+		setcookie('numbat_pass', '', time() - 31536000 );
+		header('Location: ' . Config::instance()->get('baseurl') . '/admin/');
+		die();
 	}
 
 	protected function api() {
@@ -120,7 +173,7 @@ class View_Admin {
 		die();
 	}
 
-	protected function header() {
+	protected function header($show_nav = true) {
 ?><!doctype html>
 <html>
 <head>
@@ -130,12 +183,17 @@ class View_Admin {
 </head>
 <body>
 	<div class="container">
+<?php
+		if ($show_nav) {
+?>
 		<p id="navigation">
 			<a href="<?php echo Config::instance()->get('baseurl') ?>/">Back to site</a> &mdash;
 			<a href="<?php echo Config::instance()->get('baseurl') ?>/admin/">Admin Home</a> &mdash;
-			<a href="<?php echo Config::instance()->get('baseurl') ?>/admin/add">Add Item</a>
+			<a href="<?php echo Config::instance()->get('baseurl') ?>/admin/add">Add Item</a> &mdash;
+			<a href="<?php echo Config::instance()->get('baseurl') ?>/admin/?logout">Logout</a>
 		</p>
 <?php
+		}
 	}
 
 	protected function footer() {
