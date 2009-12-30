@@ -38,6 +38,7 @@ class View_Admin {
 	}
 
 	protected function api() {
+		header('Content-Type: application/json');
 		try {
 			if (empty($_REQUEST['method']))
 				throw new Exception('No method specified');
