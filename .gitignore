@@ -1,6 +1,7 @@
 # Ignore the entire app/ directory...
 app/*
 
+# ...except for these
 !app/config.sample.php
 !app/classes/readme.txt
 !app/datatypes/readme.txt
