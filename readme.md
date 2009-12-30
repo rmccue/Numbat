@@ -8,6 +8,10 @@ media independent, as you can use the view system to create almost any type.
 Numbat also features a built-in administration, but it is extremely lite by
 design.
 
+Numbat is licensed under the
+[BSD license](http://www.opensource.org/licenses/bsd-license.php) (also in
+license.txt).
+
 
 Getting Started
 ---------------
