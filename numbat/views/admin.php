@@ -50,6 +50,13 @@ class View_Admin {
 				case 'delete-row':
 					$this->delete_row();
 					break;
+				case 'delete-item':
+					if (empty($_REQUEST['item']))
+						throw new Exception('No item specified');
+					$item = new Item($_REQUEST['item']);
+					$item->delete_item();
+					die(json_encode(array('msg' => 'Deleted item', 'code' => 0)));
+					return;
 				default:
 					throw new Exception('Invalid method specified');
 			}

@@ -71,4 +71,32 @@ $(document).ready(function () {
 			"url": "api"
 		});
 	});
+
+	$('.deletelink').click(function () {
+		if ( !confirm('Are you sure you want to delete this item?'))
+			return false;
+		if ( !confirm('Really really sure? You can\'t undo this.'))
+			return false;
+		
+		$.ajax({
+			// Data
+			"data": {
+				"method": "delete-item",
+				"item": $('#id').val()
+			},
+			"dataType": "json",
+			
+			// Callbacks
+			"error": function () {
+				$(".submit-row").append('<p class="error">Couldn\'t remove row, an error occurred. <a href="#close">Close</a>.</p>');
+			},
+			"success": function () {
+				window.location.href = './';
+			},
+			
+			// Request
+			"type": "POST",
+			"url": "api"
+		})
+	});
 });
