@@ -57,7 +57,10 @@ class Item {
 	 * @param string $type Data type to save
 	 * @throws Exception
 	 */
-	public function update($key, $value, $type) {
+	public function update($key, $value, $type, $id = null) {
+		if (!empty($id))
+			$this->id = $id;
+		
 		if (!isset($this->data[$key]))
 			$result = Database::instance()->insert(
 				array('table' => 'numbat_items'), // Params
