@@ -44,7 +44,7 @@ class Controller {
 		$req = array(
 			'page' => self::$request,
 			'url' => Config::instance()->get('baseurl') . '/' . self::$request,
-			'time' => time(),
+			'time' => $GLOBALS['numbat_start_time'],
 			'error' => false
 		);
 		
