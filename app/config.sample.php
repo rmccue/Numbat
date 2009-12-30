@@ -11,7 +11,8 @@ $config = array(
 		'user' => 'root', // Database username
 		'pass' => 'password', // Database password
 	),
-	'baseurl' => 'http://localhost/numbat' // URL to access Numbat, without trailing slash
+	'baseurl' => 'http://localhost/numbat', // URL to access Numbat, without trailing slash
+	'password' => 'somepass' // Password to gain access to administration
 );
 
 // Disable this when sending to production

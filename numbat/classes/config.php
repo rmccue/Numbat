@@ -24,7 +24,8 @@ class Config {
 				'user' => '',
 				'pass' => '',
 			),
-			'baseurl' => 'http://localhost'
+			'baseurl' => 'http://localhost',
+			'password' => false
 		);
 		$this->config = $this->merge($defaults, $config);
 	}
