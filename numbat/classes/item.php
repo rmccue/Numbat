@@ -90,6 +90,15 @@ class Item {
 	}
 
 	/**
+	 * Delete all rows associated with the item
+	 */
+	public function delete_item() {
+		$result = Database::instance()->delete('id = :id', array('id' => $this->id, 'table' => 'numbat_items'));
+		if ($result != 1)
+			throw new Exception('Delete failed!');
+	}
+
+	/**
 	 * Export item data
 	 *
 	 * @return array
