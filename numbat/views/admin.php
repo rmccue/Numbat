@@ -28,6 +28,9 @@ class View_Admin {
 			case 'single':
 				$this->render_single();
 				break;
+			case 'add':
+				$this->add();
+				break;
 			default:
 				$this->render_list();
 				break;
@@ -163,6 +166,53 @@ class View_Admin {
 		</table>
 <?php
 		$this->footer();
+	}
+
+	protected function add() {
+		$success = true;
+		if (!empty($_POST['submit']))
+			$success = $this->add_item();
+		
+		$this->title = 'Add Item';
+		$this->header();
+?>
+		<h1>Add Item</h1>
+<?php
+		if (!$success) {
+?>
+		<p class="notice">Could not add item.</p>
+<?php
+		}
+?>
+		<form method="POST">
+			<div class="form-row">
+				<label for="id">id</label>
+				<input type="text" id="id" name="id" value="" />
+				<p>This is the URL part, such as <code>some/page</code>. You cannot change this later.</p>
+			</div>
+			<div class="form-row">
+<?php
+		$type = new Data_View('view', array('type' => 'View', 'value' => ''));
+		$type->render_form();
+?>
+			</div>
+			<div class="submit-row">
+				<input type="submit" name="submit" class="default" value="Submit" />
+				<input type="reset" value="Reset" />
+			</div>
+		</form>
+<?php
+		$this->footer();
+	}
+
+	protected function add_item() {
+		if (empty($_POST['id']) || empty($_POST['view']))
+			return false;
+		
+		$item = new Item(null);
+		$item->update('view', $_POST['view'], 'View', $_POST['id']);
+		header('Location: ' . Config::instance()->get('baseurl') . '/admin/single?id=' . $_POST['id']);
+		die();
 	}
 
 	protected function render_single() {
